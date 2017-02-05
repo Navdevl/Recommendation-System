@@ -12,9 +12,9 @@ class Recommend():
     def __init__(self):
         self.read_file(FILE_NAME)
         self.set_matrix_data()
-        self.modified_data = self.modify_matrix_data(self.train_data_matrix.copy())
+        self.modified_data = self.modify_matrix_data(
+            self.train_data_matrix.copy())
         self.calculate_similarity()
-
 
     def read_file(self, file):
         with open(file, 'r') as data:
@@ -30,11 +30,9 @@ class Recommend():
         self.modified_train_data_matrix = np.zeros((n_users, n_items))
 
         for line in train_data.itertuples():
-            # print line[1]-1 , line[2]-1
             self.train_data_matrix[line[1] - 1, line[2] - 1] = line[3]
 
         for line in test_data.itertuples():
-            # print line[1]-1 , line[2]-1
             self.test_data_matrix[line[1] - 1, line[2] - 1] = line[3]
 
     def modify_matrix_data(self, ratings):
@@ -55,7 +53,8 @@ class Recommend():
 
     def calculate_similarity(self):
         # modified_sim = cosine_similarity(self.modified_data)
-        self.similarity = pairwise_distances(self.modified_train_data_matrix, metric = 'cosine')
+        self.similarity = pairwise_distances(
+            self.modified_train_data_matrix, metric='cosine')
 
     def calculate_num(self, row, col, sim, ratings):
         sum = 0
@@ -72,8 +71,9 @@ class Recommend():
     def predicts(self, ratings, similarity):
         for line in range(len(ratings)):
             for index in range(len(ratings[line])):
-                if(self.train_data_matrix[line][index]==0):
-                    self.train_data_matrix[line][index] = n.calculate_num(line,index,similarity,ratings)/n.calculate_den(line,similarity) + self.mean[line]
+                if(self.train_data_matrix[line][index] == 0):
+                    self.train_data_matrix[line][index] = n.calculate_num(
+                        line, index, similarity, ratings) / n.calculate_den(line, similarity) + self.mean[line]
 
         return self.train_data_matrix
 
