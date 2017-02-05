@@ -77,10 +77,6 @@ class Recommend():
 
         return self.train_data_matrix
 
-        # print pairwise_distances([[0,1,1,1],[1,1,0,1]], metric='cosine')
-        # print ''
-        # print cosine_similarity([[0,1,1,1],[1,1,0,1]])
-
 # To run the program into prediction
 # n = Recommend()
 # print n.train_data_matrix
